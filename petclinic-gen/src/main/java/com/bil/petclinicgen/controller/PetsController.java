@@ -16,19 +16,17 @@ import java.util.List;
 public class PetsController implements PetsApi {
     @Override
     public ResponseEntity<Pet> addPet(@Valid NewPet body) {
-        Pet pet = new Pet();
-        pet.setId(1L);
-        return ResponseEntity.ok(pet);
+        try {
+            return ResponseEntity.created(new URI("http://localhost:8080/pets/1")).build();
+        } catch(URISyntaxException e) {
+            log.error("Wrong URI syntax", e);
+            throw new IllegalStateException(e);
+        }
     }
 
     @Override
     public ResponseEntity<Void> deletePet(Long id) {
-        try {
-        return ResponseEntity.created(new URI("")).build();
-        } catch(URISyntaxException e) {
-            log.error("URI syntax error", e);
-            throw new IllegalStateException(e);
-        }
+        return ResponseEntity.ok().build();
     }
 
     @Override
