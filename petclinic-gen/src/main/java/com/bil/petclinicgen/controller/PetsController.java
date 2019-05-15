@@ -1,6 +1,5 @@
 package com.bil.petclinicgen.controller;
 
-import com.bil.petclinicgen.controller.PetsApi;
 import com.bil.petclinicgen.model.dto.NewPet;
 import com.bil.petclinicgen.model.dto.Pet;
 import org.springframework.http.ResponseEntity;
