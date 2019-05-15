@@ -1,20 +1,23 @@
 Labs around Consumer Driven Contracts with Apicurio and Microcks.
 
-# Setup (Apicurio + Microcks)
+# Environment setup
 
 ## Clone github repo
+
 ```
 git clone https://github.com/Apicurio/apicurio-studio.git
 cd apicurio-studio/distro/docker-compose
 ```
 
 ## Build keycloak image (custom build)
+
 ```
 ./setup.sh <YOUR_IP>
 docker-compose -f docker-compose.keycloak.yml build
 ```
 
 ## Start images
+
 ```
 docker-compose -f docker-compose.keycloak.yml -f docker-compose.microcks.yml -f docker-compose.apicurio.yml up
 ```
