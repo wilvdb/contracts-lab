@@ -1,5 +1,35 @@
 Labs around Consumer Driven Contracts with Apicurio and Microcks.
 
+# Setup (Apicurio + Microcks)
+
+## Clone github repo
+```
+git clone https://github.com/Apicurio/apicurio-studio.git
+cd apicurio-studio/distro/docker-compose
+```
+
+## Build keycloak image (custom build)
+```
+./setup.sh <YOUR_IP>
+docker-compose -f docker-compose.keycloak.yml build
+```
+
+## Start images
+```
+docker-compose -f docker-compose.keycloak.yml -f docker-compose.microcks.yml -f docker-compose.apicurio.yml up
+```
+
+## Keycloack setup
+
+At the first step, users must be added to real Apicuio and Microcks:
+* Connect to `http://<YOUR_IP>:8090`
+* Default credentials are: `admin / admi_password`
+
+## Login
+
+* Apicurio : ``http://<YOUR_IP>:8093``
+* Microcks : ``http://<YOUR_IP>:8900``
+
 # Code Generation
 
 Swagger provides a Maven plugin for code generation based on contracts (OpenAPI 3 supported).
