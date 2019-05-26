@@ -33,6 +33,11 @@ At the first step, users must be added to real Apicuio and Microcks:
 * Apicurio : ``http://<YOUR_IP>:8093``
 * Microcks : ``http://<YOUR_IP>:8900``
 
+# Amazon Web Services
+
+AMI with at least 4go
+Security Group
+
 # Code Generation
 
 Swagger provides a Maven plugin for code generation based on contracts (OpenAPI 3 supported).
