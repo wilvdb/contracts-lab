@@ -14,8 +14,7 @@ info:
     url: 'https://www.apache.org/licenses/LICENSE-2.0.html'
   version: 1.0.0
 servers:
-  -
-    url: 'http://petstore.swagger.io/api'
+  - url: 'http://petstore.swagger.io/api'
 paths:
   /pets:
     get:
@@ -43,8 +42,7 @@ paths:
         Pellentesque vitae felis pretium, pulvinar elit eu, euismod sapien.
       operationId: findPets
       parameters:
-        -
-          name: tags
+        - name: tags
           in: query
           description: tags to filter by
           required: false
@@ -53,8 +51,7 @@ paths:
             type: array
             items:
               type: string
-        -
-          name: limit
+        - name: limit
           in: query
           description: maximum number of results to return
           required: false
@@ -104,8 +101,7 @@ paths:
       description: 'Returns a user based on a single ID, if the user does not have access to the pet'
       operationId: find pet by id
       parameters:
-        -
-          name: id
+        - name: id
           in: path
           description: ID of pet to fetch
           required: true
@@ -129,8 +125,7 @@ paths:
       description: deletes a single pet based on the ID supplied
       operationId: deletePet
       parameters:
-        -
-          name: id
+        - name: id
           in: path
           description: ID of pet to delete
           required: true
@@ -150,10 +145,8 @@ components:
   schemas:
     Pet:
       allOf:
-        -
-          $ref: '#/components/schemas/NewPet'
-        -
-          required:
+        - $ref: '#/components/schemas/NewPet'
+        - required:
             - id
           properties:
             id:

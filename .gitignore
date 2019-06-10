@@ -27,3 +27,7 @@ HELP.md
 
 ### VS Code ###
 .vscode/
+
+donuts/target/
+petclinic-contract/target/
+petclinic-gen/target/
