@@ -4,10 +4,16 @@ org.springframework.cloud.contract.spec.Contract.make {
     description("""
         Donuts API
 """)
-    label("Get all donuts")
+    label("Get donut by id")
     request {
         method GET()
-        url '/donuts'
+
+        url('/donuts') {
+
+            queryParameters {
+                parameter 'id' : $(anyInteger())
+            }
+        }
         headers {
             contentType(applicationJson())
         }
@@ -15,9 +21,9 @@ org.springframework.cloud.contract.spec.Contract.make {
     response {
         status OK()
         body(
-                  sugar: $(regex('[0-9]+')) ,
-                  flour: $(regex('[0-9]+')) ,
-                  butter: $(regex('[0-9]+'))
+                  sugar: $(anyInteger()) ,
+                  flour: $(anyInteger()) ,
+                  butter: $(anyInteger())
               )
         headers {
             contentType(applicationJson())

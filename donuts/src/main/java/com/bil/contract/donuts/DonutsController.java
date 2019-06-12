@@ -5,24 +5,24 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.websocket.server.PathParam;
 import java.net.URI;
+import java.util.Arrays;
 
 @RestController
-@RequestMapping("/donuts")
 public class DonutsController {
 
-    @PostMapping(consumes = "application/json")
-    public ResponseEntity createDonuts() {
-            return ResponseEntity.created(URI.create("")).build();
+    @PostMapping(value = "/donuts", consumes = "application/json")
+    public ResponseEntity createDonuts(@RequestBody  Donut donut) {
+            return ResponseEntity.created(URI.create("http://localhost:8080/donuts/1")).build();
     }
 
-    @GetMapping(produces = "application/json")
+    @GetMapping(value = "/donuts", produces = "application/json")
     public ResponseEntity getDonuts() {
-        return ResponseEntity.ok().build();
+        return ResponseEntity.ok(Arrays.asList(new Donut(120, 150, 140)));
     }
 
-    @GetMapping(value = "/{id}", produces = "application/json")
+    @GetMapping(value = "/donut/{id}", produces = "application/json")
     public ResponseEntity getDonut(@PathParam("id") long id) {
-        return ResponseEntity.ok().build();
+        return ResponseEntity.ok(new Donut(120, 150, 140));
     }
 
 }
