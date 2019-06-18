@@ -44,7 +44,7 @@ public class ContractVerifierTest extends ContractVerifierBase {
 		// given:
 			MockMvcRequestSpecification request = given()
 					.header("Content-Type", "application/json")
-					.body("{\"sugar\":-1196585182,\"flour\":576711453,\"butter\":-231949795}");
+					.body("{\"sugar\":1864698785,\"flour\":-1208929909,\"butter\":302813980}");
 
 		// when:
 			ResponseOptions response = given().spec(request)
@@ -62,7 +62,7 @@ public class ContractVerifierTest extends ContractVerifierBase {
 
 		// when:
 			ResponseOptions response = given().spec(request)
-					.queryParam("id","-447661767")
+					.queryParam("id","-466416981")
 					.get("/donuts");
 
 		// then:
