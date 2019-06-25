@@ -15,7 +15,7 @@ public interface DonutsClient {
     Response createDonuts(Donut donut);
 
     @RequestLine("GET /donuts")
-    List<Donut> getDonuts();
+    Response getDonuts();
 
     @RequestLine("GET /donuts/{id}")
     Donut getDonut(@Param("id") long id);

@@ -19,7 +19,7 @@ import static org.junit.Assert.assertEquals;
 public class ContractTest {
 
 
-    DonutsClient controller = Feign.builder().encoder(new GsonEncoder())
+    DonutsClient donutsClient = Feign.builder().encoder(new GsonEncoder())
             .target(DonutsClient.class, "http://localhost:8085");
 
     @Rule
@@ -27,7 +27,7 @@ public class ContractTest {
             new PactProviderRuleMk2("donuts-api-pact", "localhost", 8085, this);
 
 
-    @Pact(consumer="donuts-pact")
+    @Pact(consumer="donuts-factory-pact")
     public RequestResponsePact donutsOk(PactDslWithProvider builder) throws Exception {
         return builder
                 .given("")
@@ -39,14 +39,25 @@ public class ContractTest {
                 .willRespondWith()
                 .status(201)
                 .headers(responseHeaders())
+                .given("")
+                .uponReceiving("Represents a successful scenario of getting all donuts")
+                .path("/donuts")
+                .method("GET")
+                .willRespondWith()
+                .status(200)
+                .body("[{\"butter\": 120, \"sugar\": 150, \"flour\": 200}]")
+                .headers(responseHeaders())
                 .toPact();
     }
 
     @Test
     @PactVerification
-    public void runTestDonuts() {
-        Response entity = this.controller.createDonuts(new Donut(120, 150, 200));
-        assertEquals(entity.status(), 201);
+    public void runDonuts() {
+        Response response = this.donutsClient.createDonuts(new Donut(120, 150, 200));
+        assertEquals(response.status(), 201);
+
+        response = this.donutsClient.getDonuts();
+        assertEquals(response.status(), 200);
 
     }
 
