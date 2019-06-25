@@ -31,3 +31,4 @@ HELP.md
 donuts/target/
 petclinic-contract/target/
 petclinic-gen/target/
+donuts-factory-pact/target/

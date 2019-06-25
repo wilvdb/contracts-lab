@@ -24,6 +24,7 @@
         <module>petclinic-gen</module>
         <module>petclinic-contract</module>
         <module>donuts-factory</module>
+        <module>donuts-factory-pact</module>
     </modules>
 
 </project>
