@@ -1,12 +1,9 @@
-package com.bil.contract.donuts;
+package com.bil.contract.simpson;
 
 import feign.Headers;
 import feign.Param;
 import feign.RequestLine;
 import feign.Response;
-
-import java.net.URI;
-import java.util.List;
 
 public interface DonutsClient {
 

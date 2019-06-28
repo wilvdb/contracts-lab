@@ -25,6 +25,7 @@
         <module>petclinic-contract</module>
         <module>donuts-factory</module>
         <module>donuts-factory-pact</module>
+        <module>simpson-client-pact</module>
     </modules>
 
 </project>

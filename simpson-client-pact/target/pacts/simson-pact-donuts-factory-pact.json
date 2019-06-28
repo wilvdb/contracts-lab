@@ -1,0 +1,92 @@
+{
+    "provider": {
+        "name": "donuts-factory-pact"
+    },
+    "consumer": {
+        "name": "simson-pact"
+    },
+    "interactions": [
+        {
+            "description": "all ingredients for a donut",
+            "request": {
+                "method": "POST",
+                "path": "/donuts",
+                "headers": {
+                    "Content-Type": "application/json"
+                },
+                "body": {
+                    "butter": 120,
+                    "flour": 200,
+                    "sugar": 150
+                }
+            },
+            "response": {
+                "status": 201,
+                "headers": {
+                    "Content-Type": "application/json;charset=UTF-8"
+                }
+            },
+            "providerStates": [
+                {
+                    "name": "creating successfully a donut"
+                }
+            ]
+        },
+        {
+            "description": "some missing ingredients",
+            "request": {
+                "method": "POST",
+                "path": "/donuts",
+                "headers": {
+                    "Content-Type": "application/json"
+                },
+                "body": {
+                    "butter": -100,
+                    "flour": 200,
+                    "sugar": 150
+                }
+            },
+            "response": {
+                "status": 400
+            },
+            "providerStates": [
+                {
+                    "name": "failing to create a donut"
+                }
+            ]
+        },
+        {
+            "description": "every produced donuts by the factory",
+            "request": {
+                "method": "GET",
+                "path": "/donuts"
+            },
+            "response": {
+                "status": 200,
+                "headers": {
+                    "Content-Type": "application/json;charset=UTF-8"
+                },
+                "body": [
+                    {
+                        "butter": 120,
+                        "flour": 200,
+                        "sugar": 150
+                    }
+                ]
+            },
+            "providerStates": [
+                {
+                    "name": "getting all donuts"
+                }
+            ]
+        }
+    ],
+    "metadata": {
+        "pactSpecification": {
+            "version": "3.0.0"
+        },
+        "pact-jvm": {
+            "version": "3.5.23"
+        }
+    }
+}
