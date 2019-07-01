@@ -3,6 +3,8 @@ package com.bil.contract.simpson;
 import au.com.dius.pact.consumer.Pact;
 import au.com.dius.pact.consumer.PactProviderRuleMk2;
 import au.com.dius.pact.consumer.PactVerification;
+import au.com.dius.pact.consumer.dsl.PactDslJsonArray;
+import au.com.dius.pact.consumer.dsl.PactDslRootValue;
 import au.com.dius.pact.consumer.dsl.PactDslWithProvider;
 import au.com.dius.pact.model.RequestResponsePact;
 import feign.Feign;
@@ -39,7 +41,6 @@ public class ContractTest {
                     .body("{\"butter\": 120, \"sugar\": 150, \"flour\": 200}")
                     .willRespondWith()
                     .status(201)
-                    .headers(responseHeaders())
                 .given("failing to create a donut")
                     .uponReceiving("some missing ingredients")
                     .path("/donuts")
@@ -76,7 +77,7 @@ public class ContractTest {
 
     private Map<String, String> responseHeaders() {
         Map<String, String> map = new HashMap<>();
-        map.put("Content-Type", "application/json;charset=UTF-8");
+        map.put("Content-Type", "application/json");
         return map;
     }
 

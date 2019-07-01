@@ -19,12 +19,12 @@ public class DonutsController {
 
     @GetMapping(value = "/donuts", produces = "application/json")
     public ResponseEntity getDonuts() {
-        return ResponseEntity.ok(Arrays.asList(new Donut(120, 150, 140)));
+        return ResponseEntity.ok(Arrays.asList(new Donut(120, 150, 200)));
     }
 
     @GetMapping(value = "/donuts/{id}", produces = "application/json")
     public ResponseEntity getDonut(@PathVariable("id") long id) {
-        return ResponseEntity.ok(new Donut(120, 150, 140));
+        return ResponseEntity.ok(new Donut(120, 150, 200));
     }
 
 }

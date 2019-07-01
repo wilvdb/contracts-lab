@@ -65,6 +65,7 @@
                 <artifactId>pact-jvm-provider-maven_2.12</artifactId>
                 <version>${pact-jvm-provider-maven.version}</version>
                 <configuration>
+                    <projectVersion>${project.version}</projectVersion>
                     <pactBrokerUrl>http://localhost:8085</pactBrokerUrl>
                 </configuration>
                 <executions>

@@ -42,30 +42,8 @@
         </dependency>
         <dependency>
             <groupId>org.springframework.cloud</groupId>
-            <artifactId>spring-cloud-starter-openfeign</artifactId>
-            <version>2.1.1.RELEASE</version>
-        </dependency>
-        <dependency>
-            <groupId>io.github.openfeign</groupId>
-            <artifactId>feign-gson</artifactId>
-            <version>10.2.3</version>
-        </dependency>
-<!--        <dependency>-->
-<!--            <groupId>org.springframework.cloud</groupId>-->
-<!--            <artifactId>spring-cloud-starter-contract-verifier</artifactId>-->
-<!--            <version>${spring-cloud-contract.version}</version>-->
-<!--            <scope>test</scope>-->
-<!--        </dependency>-->
-<!--        <dependency>-->
-<!--            <groupId>org.springframework.cloud</groupId>-->
-<!--            <artifactId>spring-cloud-contract-pact</artifactId>-->
-<!--            <version>${spring-cloud-contract.version}</version>-->
-<!--            <scope>test</scope>-->
-<!--        </dependency>-->
-        <dependency>
-            <groupId>au.com.dius</groupId>
-            <artifactId>pact-jvm-consumer-junit_2.12</artifactId>
-            <version>${pact-jvm-provider-maven.version}</version>
+            <artifactId>spring-cloud-starter-contract-verifier</artifactId>
+            <version>${spring-cloud-contract.version}</version>
             <scope>test</scope>
         </dependency>
     </dependencies>
@@ -77,44 +55,46 @@
                 <artifactId>spring-boot-maven-plugin</artifactId>
             </plugin>
             <plugin>
+                <artifactId>maven-surefire-plugin</artifactId>
+                <configuration>
+                    <failIfNoTests>true</failIfNoTests>
+                    <systemPropertyVariables>
+                        <pact.verifier.publishResults>true</pact.verifier.publishResults>
+                        <pact.provider.version>${project.version}</pact.provider.version>
+                    </systemPropertyVariables>
+                </configuration>
+            </plugin>
+            <plugin>
+                <groupId>org.springframework.cloud</groupId>
+                <artifactId>spring-cloud-contract-maven-plugin</artifactId>
+                <version>${spring-cloud-contract.version}</version>
+                <extensions>true</extensions>
+                <configuration>
+                    <contractsRepositoryUrl>pact://http://localhost:8085</contractsRepositoryUrl>
+                    <contractDependency>
+                        <groupId>${project.groupId}</groupId>
+                        <artifactId>${project.artifactId}</artifactId>
+                        <version>+</version>
+                    </contractDependency>
+                    <contractsMode>REMOTE</contractsMode>
+                    <packageWithBaseClasses>com.bil.contract.donuts</packageWithBaseClasses>
+                </configuration>
+                <dependencies>
+                    <dependency>
+                        <groupId>org.springframework.cloud</groupId>
+                        <artifactId>spring-cloud-contract-pact</artifactId>
+                        <version>${spring-cloud-contract.version}</version>
+                    </dependency>
+                </dependencies>
+            </plugin>
+            <plugin>
                 <groupId>au.com.dius</groupId>
                 <artifactId>pact-jvm-provider-maven_2.12</artifactId>
                 <version>${pact-jvm-provider-maven.version}</version>
                 <configuration>
                     <pactBrokerUrl>http://localhost:8085</pactBrokerUrl>
                 </configuration>
-                <executions>
-                    <execution>
-                        <phase>install</phase>
-                        <goals>
-                            <goal>publish</goal>
-                        </goals>
-                    </execution>
-                </executions>
             </plugin>
-<!--            <plugin>-->
-<!--                <groupId>org.springframework.cloud</groupId>-->
-<!--                <artifactId>spring-cloud-contract-maven-plugin</artifactId>-->
-<!--                <version>${spring-cloud-contract.version}</version>-->
-<!--                <extensions>true</extensions>-->
-<!--                <configuration>-->
-<!--                    <contractsRepositoryUrl>pact://http://localhost:80</contractsRepositoryUrl>-->
-<!--                    <contractDependency>-->
-<!--                        <groupId>${project.groupId}</groupId>-->
-<!--                        <artifactId>${project.artifactId}</artifactId>-->
-<!--                        <version>+</version>-->
-<!--                    </contractDependency>-->
-<!--                    <contractsMode>REMOTE</contractsMode>-->
-<!--                    <packageWithBaseClasses>com.bil.contract.donuts</packageWithBaseClasses>-->
-<!--                </configuration>-->
-<!--                <dependencies>-->
-<!--                    <dependency>-->
-<!--                        <groupId>org.springframework.cloud</groupId>-->
-<!--                        <artifactId>spring-cloud-contract-pact</artifactId>-->
-<!--                        <version>${spring-cloud-contract.version}</version>-->
-<!--                    </dependency>-->
-<!--                </dependencies>-->
-<!--            </plugin>-->
         </plugins>
     </build>
 </project>
