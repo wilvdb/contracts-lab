@@ -91,7 +91,7 @@ Go to module docker and execute:
 
 It starts a pact broker backed by a PostgreSQL database on: ``http://llocalhost:8085``
 
-## Install pact
+## Install contract
 
 Pact definition is located into ```ContractTest``` test class.
 Contract installation is performed by : ``mvn install``
