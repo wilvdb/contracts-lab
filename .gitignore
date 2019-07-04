@@ -28,7 +28,8 @@ HELP.md
 ### VS Code ###
 .vscode/
 
-donuts/target/
+donuts-fatory/target/
 petclinic-contract/target/
 petclinic-gen/target/
 donuts-factory-pact/target/
+simpsonclientpact/target/
