@@ -6,7 +6,6 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 import java.net.URI;
-import java.util.Arrays;
 
 @RestController
 @Validated
@@ -17,9 +16,13 @@ public class DonutsController {
             return ResponseEntity.created(URI.create("http://localhost:8080/donuts/1")).build();
     }
 
+    /**
+     * TODO complete the implementation
+     * @return
+     */
     @GetMapping(value = "/donuts", produces = "application/json")
     public ResponseEntity getDonuts() {
-        return ResponseEntity.ok(Arrays.asList(new Donut(120, 150, 200)));
+        return ResponseEntity.notFound().build();
     }
 
     @GetMapping(value = "/donuts/{id}", produces = "application/json")

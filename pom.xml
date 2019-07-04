@@ -24,8 +24,9 @@
         <module>petclinic-gen</module>
         <module>petclinic-contract</module>
         <module>donuts-factory</module>
-        <module>donuts-factory-pact</module>
+        <!-- Pact broker must be started before -->
         <module>simpson-client-pact</module>
+        <module>donuts-factory-pact</module>
     </modules>
 
 </project>
