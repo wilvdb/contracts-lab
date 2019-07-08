@@ -80,8 +80,9 @@ org.springframework.cloud.contract.spec.Contract.make {
 This example implements a verifier, to check if controller implementation is compliant with the contract.
 And a stub runner, to start WireMock setup by the contract directly. 
 
-# Simpson-client-pact
+# Simpson client pact
 
+It aims to publish contract on a pact broker.
 Before using this project, start a pact broker.
 
 ## Start Pact Broker
@@ -89,12 +90,39 @@ Before using this project, start a pact broker.
 Go to module docker and execute:
 ```docker-compose up```
 
-It starts a pact broker backed by a PostgreSQL database on: ``http://llocalhost:8085``
+It starts a pact broker backed by a PostgreSQL database on: ``http://localhost:8085``
 
 ## Install contract
 
 Pact definition is located into ```ContractTest``` test class.
 Contract installation is performed by : ``mvn install``
+Sample contract implementation:
+```
+@Pact(consumer="simpson-pact")
+public RequestResponsePact donutsOk(PactDslWithProvider builder) throws Exception {
+  return builder
+    .given("creating successfully a donut")
+      .uponReceiving("all ingredients for a donut")
+      .path("/donuts")
+      .method("POST")
+      .headers("Content-Type", "application/json")
+      .body("{\"butter\": 120, \"sugar\": 150, \"flour\": 200}")
+      .willRespondWith()
+      .status(201)
+```
+
+# Donuts factory pact
+
+Check its controller implementation by getting contract from the pact broker, and generating (Spring Cloud Contract part) unit tests.
+Pact broker must be started and Simpson client pact must be installed on pact broker.
+Hand written test contains only:
+```
+@Before
+public void setup() {
+  RestAssuredMockMvc.standaloneSetup(new DonutsController());
+}
+```
+Complete the implementation and try to get a green implementation on pact broker.
 
 # Apicurio and Microcks
 
