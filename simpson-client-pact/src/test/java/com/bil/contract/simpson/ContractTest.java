@@ -3,9 +3,9 @@ package com.bil.contract.simpson;
 import au.com.dius.pact.consumer.Pact;
 import au.com.dius.pact.consumer.PactProviderRuleMk2;
 import au.com.dius.pact.consumer.PactVerification;
-import au.com.dius.pact.consumer.dsl.PactDslJsonArray;
-import au.com.dius.pact.consumer.dsl.PactDslRootValue;
+import au.com.dius.pact.consumer.dsl.DslPart;
 import au.com.dius.pact.consumer.dsl.PactDslWithProvider;
+import static io.pactfoundation.consumer.dsl.LambdaDsl.*;
 import au.com.dius.pact.model.RequestResponsePact;
 import feign.Feign;
 import feign.Response;
@@ -32,30 +32,32 @@ public class ContractTest {
 
     @Pact(consumer="simpson-pact")
     public RequestResponsePact donutsOk(PactDslWithProvider builder) throws Exception {
+        DslPart arrayOfDonuts = newJsonArray((a) -> a.object((o) -> {
+            o.numberType("butter", "sugar", "flour");
+        })).build();
+
+        DslPart anyDonuts = newJsonBody((b) -> b.numberType("butter", "sugar", "flour")).build();
+        DslPart invalidDonuts = newJsonBody((b) -> {
+            b.numberType("sugar", "flour");
+            b.numberType("butter", -100);
+        }).build();
+
         return builder
                 .given("creating successfully a donut")
                     .uponReceiving("all ingredients for a donut")
                     .path("/donuts")
                     .method("POST")
                     .headers("Content-Type", "application/json")
-                    .body("{\"butter\": 120, \"sugar\": 150, \"flour\": 200}")
+                    .body(anyDonuts)
                     .willRespondWith()
                     .status(201)
-                .given("failing to create a donut")
-                    .uponReceiving("some missing ingredients")
-                    .path("/donuts")
-                    .method("POST")
-                    .headers("Content-Type", "application/json")
-                    .body("{\"butter\":-100, \"sugar\": 150, \"flour\": 200}")
-                    .willRespondWith()
-                    .status(400)
                 .given("getting all donuts")
                     .uponReceiving("every produced donuts by the factory")
                     .path("/donuts")
                     .method("GET")
                     .willRespondWith()
                     .status(200)
-                    .body("[{\"butter\": 120, \"sugar\": 150, \"flour\": 200}]")
+                    .body(arrayOfDonuts)
                     .headers(responseHeaders())
                 
                 .toPact();
@@ -66,9 +68,6 @@ public class ContractTest {
     public void runDonuts() {
         Response response = this.donutsClient.createDonuts(new Donut(120, 150, 200));
         assertEquals(response.status(), 201);
-
-        response = this.donutsClient.createDonuts(new Donut(-100, 150, 200));
-        assertEquals(response.status(), 400);
 
         response = this.donutsClient.getDonuts();
         Assert.assertEquals(response.status(), 200);
