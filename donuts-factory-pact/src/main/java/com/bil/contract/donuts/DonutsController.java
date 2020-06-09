@@ -6,10 +6,13 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 import java.net.URI;
+import java.util.Arrays;
+
 
 @RestController
 @Validated
 public class DonutsController {
+
 
     @PostMapping(value = "/donuts", consumes = "application/json")
     public ResponseEntity createDonuts(@RequestBody  @Valid Donut donut) {
@@ -22,12 +25,11 @@ public class DonutsController {
      */
     @GetMapping(value = "/donuts", produces = "application/json")
     public ResponseEntity getDonuts() {
-        return ResponseEntity.notFound().build();
+        return ResponseEntity.ok(Arrays.asList(new Donut(100, 100, 100)));
     }
 
     @GetMapping(value = "/donuts/{id}", produces = "application/json")
     public ResponseEntity getDonut(@PathVariable("id") long id) {
         return ResponseEntity.ok(new Donut(120, 150, 200));
     }
-
 }
