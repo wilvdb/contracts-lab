@@ -56,12 +56,9 @@ class ContractTest {
                 .willRespondWith()
                     .status(200)
                     .body(donutsBody)
-                    .headers(responseHeaders())
+                    .headers(mapOf("Content-Type" to "application/json"))
                 .toPact()
     }
-
-
-    private fun responseHeaders() = mapOf("Content-Type" to "application/json")
 
     @Test
     @PactTestFor(pactMethod = "createDonut")

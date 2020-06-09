@@ -84,6 +84,27 @@ And a stub runner, to start WireMock setup by the contract directly.
 
 It aims to publish contract on a pact broker.
 Before using this project, start a pact broker.
+It produces an additional jar containing only pact files to share through artefact repository :
+```
+<plugin>
+    <groupId>org.apache.maven.plugins</groupId>
+    <artifactId>maven-jar-plugin</artifactId>
+    <executions>
+        <execution>
+            <id>pact-files</id>
+            <goals>
+                <goal>jar</goal>
+            </goals>
+            <configuration>
+                <classifier>pacts</classifier>
+                <includes>
+                    <include>pacts/**</include>
+                </includes>
+            </configuration>
+        </execution>
+    </executions>
+</plugin>
+```
 
 ## Start Pact Broker
 
