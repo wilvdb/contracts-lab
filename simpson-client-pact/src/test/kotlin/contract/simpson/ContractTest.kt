@@ -12,15 +12,15 @@ import com.bil.contract.simpson.Donut
 import com.bil.contract.simpson.DonutsClient
 import feign.Feign
 import feign.gson.GsonEncoder
-import org.junit.jupiter.api.Assertions.assertEquals
-import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.extension.ExtendWith
+import kotlin.test.Test
+import kotlin.test.assertEquals
 
 @ExtendWith(PactConsumerTestExt::class)
 class ContractTest {
 
     @Pact(provider = "donuts-factory-pact", consumer = "simpson-pact")
-    fun createDonut(builder: PactDslWithProvider): RequestResponsePact {
+    fun `create donuts`(builder: PactDslWithProvider): RequestResponsePact {
         val donutsBody = PactDslJsonArray().minArrayLike(1)
                 .integerType("butter")
                 .integerType("sugar")
@@ -61,20 +61,17 @@ class ContractTest {
     }
 
     @Test
-    @PactTestFor(pactMethod = "createDonut")
-    fun runDonuts(mockServer: MockServer) {
+    @PactTestFor(pactMethod = "create donuts")
+    fun `check create donuts`(mockServer: MockServer) {
         val donutsClient = Feign.builder()
                 .encoder(GsonEncoder())
                 .target(DonutsClient::class.java, mockServer.getUrl())
 
-        var response = donutsClient.createDonuts(Donut(120, 150, 200))
-        assertEquals(response.status(), 201)
+        assertEquals(201, donutsClient.createDonuts(Donut(120, 150, 200)).status())
 
-        response = donutsClient.createDonuts(Donut(-100, 150, 200))
-        assertEquals(response.status(), 400)
+        assertEquals(400, donutsClient.createDonuts(Donut(-100, 150, 200)).status())
 
-        response = donutsClient.getDonuts()
-        assertEquals(response.status(), 200)
+        assertEquals(200, donutsClient.getDonuts().status())
 
     }
 }
